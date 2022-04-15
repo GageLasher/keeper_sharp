@@ -20,9 +20,9 @@ namespace keeper_sharp.Repositories
         {
             string sql = @"
                 INSERT INTO vaults
-                (name, description, img, creatorId)
+                (name, description, img, creatorId, isPrivate)
                 VALUES
-                (@Name, @Description, @Img, @CreatorId);
+                (@Name, @Description, @Img, @CreatorId, @IsPrivate);
                 SELECT LAST_INSERT_ID();
             ";
             int id = _db.ExecuteScalar<int>(sql, data);

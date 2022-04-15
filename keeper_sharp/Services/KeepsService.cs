@@ -64,17 +64,16 @@ namespace keeper_sharp.Services
             _keepsRepo.Remove(id);
         }
 
-        internal List<VaultKeepViewModel> GetVaultKeepsByVaultId(int id)
+        internal List<VaultKeepViewModel> GetVaultKeepsByVaultId(int id, string userId)
         {
-            // Vault found = _vaultsRepo.GetById(id);
-            // if (found != null)
-            // {
+            Vault found = _vaultsRepo.GetById(id);
 
-            //     if (found.IsPrivate & found.CreatorId != userId)
-            //     {
-            //         throw new Exception("This is a private vault");
-            //     }
-            // }
+
+            if (found.IsPrivate & found.CreatorId != userId)
+            {
+                throw new Exception("This is a private vault");
+            }
+
             return _keepsRepo.GetVaultKeepsByVaultId(id);
         }
     }
