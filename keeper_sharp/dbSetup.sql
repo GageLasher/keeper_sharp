@@ -14,22 +14,32 @@ CREATE TABLE IF NOT EXISTS vaults(
   creatorId VARCHAR(255),
   FOREIGN KEY (creatorId) REFERENCES accounts(id)
 ) default charset utf8 COMMENT '';
+ALTER TABLE
+  vaults
+ADD
+  COLUMN img TEXT
+AFTER
+  name;
+ALTER TABLE
+  vaults ALTER isPrivate
+SET
+  DEFAULT false;
 CREATE Table IF NOT Exists vaultKeeps(
-  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  keepId INT,
-  vaultId INT,
-  creatorId VARCHAR(255),
-  FOREIGN KEY (creatorId) REFERENCES accounts(id),
-  FOREIGN KEY (keepId) REFERENCES keeps(id),
-  FOREIGN KEY (vaultId) REFERENCES vaults(id)
-) default charset utf8 COMMENT '';
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    keepId INT,
+    vaultId INT,
+    creatorId VARCHAR(255),
+    FOREIGN KEY (creatorId) REFERENCES accounts(id),
+    FOREIGN KEY (keepId) REFERENCES keeps(id),
+    FOREIGN KEY (vaultId) REFERENCES vaults(id)
+  ) default charset utf8 COMMENT '';
 CREATE TABLE IF NOT EXISTS keeps(
-  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  name TEXT,
-  description TEXT,
-  img TEXT,
-  creatorId VARCHAR(255),
-  views INT,
-  kept INT,
-  FOREIGN KEY (creatorId) REFERENCES accounts(id)
-) default charset utf8 COMMENT '';
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name TEXT,
+    description TEXT,
+    img TEXT,
+    creatorId VARCHAR(255),
+    views INT,
+    kept INT,
+    FOREIGN KEY (creatorId) REFERENCES accounts(id)
+  ) default charset utf8 COMMENT '';
