@@ -55,5 +55,10 @@ namespace keeper_sharp.Services
             }
             _keepsRepo.Remove(id);
         }
+
+        internal List<VaultKeepViewModel> GetVaultKeepsByVaultId(int id)
+        {
+            return _keepsRepo.GetVaultKeepsByVaultId(id);
+        }
     }
 }

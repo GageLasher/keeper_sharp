@@ -12,4 +12,8 @@ namespace keeper_sharp.Models
         public string CreatorId { get; set; }
         public Account Creator { get; set; }
     }
+    public class VaultKeepViewModel : Keep
+    {
+        public int VaultKeepId { get; set; }
+    }
 }

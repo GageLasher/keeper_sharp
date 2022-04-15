@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CodeWorks.Auth0Provider;
 using keeper_sharp.Models;
@@ -12,11 +13,14 @@ namespace keeper_sharp.Controllers
     public class VaultsController : ControllerBase
     {
         private readonly VaultsService _vs;
+        private readonly KeepsService _ks;
 
-        public VaultsController(VaultsService vs)
+        public VaultsController(VaultsService vs, KeepsService ks)
         {
             _vs = vs;
+            _ks = ks;
         }
+
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<Vault>> Create([FromBody] Vault data)
@@ -76,6 +80,20 @@ namespace keeper_sharp.Controllers
 
                 _vs.Remove(id, user.Id);
                 return Ok("deleted");
+            }
+            catch (System.Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet("{id}/keeps")]
+        public ActionResult<List<VaultKeepViewModel>> GetVaultKeepsByVaultId(int id)
+        {
+            try
+            {
+                List<VaultKeepViewModel> keeps = _ks.GetVaultKeepsByVaultId(id);
+                return Ok(keeps);
             }
             catch (System.Exception e)
             {

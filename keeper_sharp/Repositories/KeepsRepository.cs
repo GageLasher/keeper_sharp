@@ -77,6 +77,26 @@ namespace keeper_sharp.Repositories
             throw new Exception("Sql error on remove keeps, no rows affected");
         }
 
+        internal List<VaultKeepViewModel> GetVaultKeepsByVaultId(int id)
+        {
+            string sql = @"
+            SELECT vk.*,
+            a.*,
+            k.*
+            FROM vaultKeeps vk
+            JOIN accounts a ON vk.creatorId = a.id
+            JOIN keeps k ON vk.keepId = k.id
+            WHERE vk.vaultId = @id;
+            ";
+            return _db.Query<VaultKeepViewModel, Account, Keep, VaultKeepViewModel>(sql, (vk, a, k) =>
+            {
+                vk.Creator = a;
+                vk.Id = k.Id;
+                vk.VaultKeepId = vk.Id;
+                return vk;
+            }, new { id }).ToList();
+        }
+
         internal List<Keep> GetAll()
         {
             string sql = @"
