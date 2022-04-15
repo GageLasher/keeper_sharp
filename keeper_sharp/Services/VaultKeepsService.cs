@@ -17,8 +17,13 @@ namespace keeper_sharp.Services
             return _vaultKeepsRepo.Create(data);
         }
 
-        internal void Delete(int id)
+        internal void Delete(int id, string userId)
         {
+            VaultKeep found = _vaultKeepsRepo.GetById(id);
+            if (found.CreatorId != userId)
+            {
+                throw new System.Exception("This isn't yours to delete");
+            }
             _vaultKeepsRepo.Delete(id);
         }
     }

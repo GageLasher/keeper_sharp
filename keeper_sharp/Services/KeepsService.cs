@@ -8,10 +8,12 @@ namespace keeper_sharp.Services
     public class KeepsService
     {
         private readonly KeepsRepository _keepsRepo;
+        private readonly VaultsRepository _vaultsRepo;
 
-        public KeepsService(KeepsRepository keepsRepo)
+        public KeepsService(KeepsRepository keepsRepo, VaultsRepository vaultsRepo)
         {
             _keepsRepo = keepsRepo;
+            _vaultsRepo = vaultsRepo;
         }
 
         internal Keep Create(Keep data)
@@ -64,6 +66,15 @@ namespace keeper_sharp.Services
 
         internal List<VaultKeepViewModel> GetVaultKeepsByVaultId(int id)
         {
+            // Vault found = _vaultsRepo.GetById(id);
+            // if (found != null)
+            // {
+
+            //     if (found.IsPrivate & found.CreatorId != userId)
+            //     {
+            //         throw new Exception("This is a private vault");
+            //     }
+            // }
             return _keepsRepo.GetVaultKeepsByVaultId(id);
         }
     }

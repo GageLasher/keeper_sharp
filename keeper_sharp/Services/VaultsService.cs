@@ -22,6 +22,7 @@ namespace keeper_sharp.Services
         internal Vault GetById(int id)
         {
             Vault found = _vaultsRepo.GetById(id);
+
             if (found == null)
             {
                 throw new Exception("no vault by that id");

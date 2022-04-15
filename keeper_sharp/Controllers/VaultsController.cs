@@ -41,10 +41,13 @@ namespace keeper_sharp.Controllers
             }
         }
         [HttpGet("{id}")]
+
         public ActionResult<Vault> GetById(int id)
         {
             try
             {
+                // Account user = await HttpContext.GetUserInfoAsync<Account>();
+
                 Vault vault = _vs.GetById(id);
                 return Ok(vault);
             }
@@ -92,6 +95,8 @@ namespace keeper_sharp.Controllers
         {
             try
             {
+                // Account user = await HttpContext.GetUserInfoAsync<Account>();
+
                 List<VaultKeepViewModel> keeps = _ks.GetVaultKeepsByVaultId(id);
                 return Ok(keeps);
             }

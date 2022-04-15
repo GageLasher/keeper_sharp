@@ -1,5 +1,6 @@
 using System;
 using System.Data;
+using System.Linq;
 using Dapper;
 using keeper_sharp.Models;
 
@@ -26,6 +27,16 @@ namespace keeper_sharp.Repositories
             int id = _db.ExecuteScalar<int>(sql, data);
             data.Id = id;
             return data;
+        }
+
+        internal VaultKeep GetById(int id)
+        {
+            string sql = @"
+            SELECT vk.*
+            FROM vaultKeeps vk
+            WHERE vk.id = @id;
+            ";
+            return _db.Query<VaultKeep>(sql, new { id }).FirstOrDefault();
         }
 
         internal string Delete(int id)
