@@ -43,3 +43,13 @@ CREATE TABLE IF NOT EXISTS keeps(
     kept INT,
     FOREIGN KEY (creatorId) REFERENCES accounts(id)
   ) default charset utf8 COMMENT '';
+SELECT
+  vk.*,
+  a.*,
+  k.*
+FROM
+  vaultKeeps vk
+  JOIN accounts a ON vk.creatorId = a.id
+  JOIN keeps k ON vk.keepId = k.id
+WHERE
+  vk.vaultId = 16

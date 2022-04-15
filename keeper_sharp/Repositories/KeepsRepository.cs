@@ -80,20 +80,24 @@ namespace keeper_sharp.Repositories
         internal List<VaultKeepViewModel> GetVaultKeepsByVaultId(int id)
         {
             string sql = @"
-            SELECT vk.*,
+            SELECT v.*,
             a.*,
-            k.*
-            FROM vaultKeeps vk
-            JOIN accounts a ON vk.creatorId = a.id
+            k.*,
+            vk.*
+            FROM vaults v
+            JOIN vaultKeeps vk ON v.id = vk.vaultId
             JOIN keeps k ON vk.keepId = k.id
-            WHERE vk.vaultId = @id;
+            JOIN accounts a ON vk.creatorId = a.id
+            WHERE v.id = @id;
             ";
-            return _db.Query<VaultKeepViewModel, Account, Keep, VaultKeepViewModel>(sql, (vk, a, k) =>
+            return _db.Query<Vault, Account, VaultKeepViewModel, Keep, VaultKeepViewModel>(sql, (v, a, vkvm, vk) =>
             {
-                vk.Creator = a;
-                vk.Id = k.Id;
-                vk.VaultKeepId = vk.Id;
-                return vk;
+                vkvm.Creator = a;
+                vkvm.VaultKeepId = vk.Id;
+
+
+
+                return vkvm;
             }, new { id }).ToList();
         }
 
