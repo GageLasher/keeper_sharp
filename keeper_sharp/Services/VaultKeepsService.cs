@@ -6,14 +6,21 @@ namespace keeper_sharp.Services
     public class VaultKeepsService
     {
         private readonly VaultKeepsRepository _vaultKeepsRepo;
+        private readonly VaultsRepository _vaultsRepo;
 
-        public VaultKeepsService(VaultKeepsRepository vaultKeepsRepo)
+        public VaultKeepsService(VaultKeepsRepository vaultKeepsRepo, VaultsRepository vaultsRepo)
         {
             _vaultKeepsRepo = vaultKeepsRepo;
+            _vaultsRepo = vaultsRepo;
         }
 
         internal VaultKeep Create(VaultKeep data)
         {
+            Vault found = _vaultsRepo.GetById(data.VaultId);
+            if (found.CreatorId != data.CreatorId)
+            {
+                throw new System.Exception("bro this isn't your vault");
+            }
             return _vaultKeepsRepo.Create(data);
         }
 
