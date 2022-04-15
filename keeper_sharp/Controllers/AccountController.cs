@@ -14,10 +14,12 @@ namespace keeper_sharp.Controllers
     public class AccountController : ControllerBase
     {
         private readonly AccountService _accountService;
+        private readonly VaultsService _vs;
 
-        public AccountController(AccountService accountService)
+        public AccountController(AccountService accountService, VaultsService vs)
         {
             _accountService = accountService;
+            _vs = vs;
         }
 
         [HttpGet]
@@ -32,6 +34,22 @@ namespace keeper_sharp.Controllers
             catch (Exception e)
             {
                 return BadRequest(e.Message);
+            }
+        }
+        [HttpGet("vaults")]
+        [Authorize]
+        public async Task<ActionResult<List<Vault>>> GetAccountVaults()
+        {
+            try
+            {
+                Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+                List<Vault> vaults = _vs.GetVaultsByProfileId(userInfo.Id);
+                return Ok(vaults);
+            }
+            catch (System.Exception)
+            {
+
+                return BadRequest();
             }
         }
     }
