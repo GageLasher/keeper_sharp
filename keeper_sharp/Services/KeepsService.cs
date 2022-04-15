@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using keeper_sharp.Models;
 using keeper_sharp.Repositories;
 
@@ -15,6 +16,11 @@ namespace keeper_sharp.Services
         internal Keep Create(Keep data)
         {
             return _keepsRepo.Create(data);
+        }
+
+        internal List<Keep> GetAll()
+        {
+            return _keepsRepo.GetAll();
         }
     }
 }
