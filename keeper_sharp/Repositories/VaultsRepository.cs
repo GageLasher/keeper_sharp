@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Dapper;
@@ -62,6 +63,23 @@ namespace keeper_sharp.Repositories
                 return original;
             }
             throw new Exception("Sql error on update vaults, no rows affected");
+        }
+
+        internal List<Vault> GetVaultsByProfileId(string id)
+        {
+            string sql = @"
+            SELECT
+            v.*,
+            a.*
+            FROM vaults v
+            JOIN accounts a ON v.creatorId = a.id
+            WHERE v.creatorId = @id;
+            ";
+            return _db.Query<Vault, Account, Vault>(sql, (v, a) =>
+            {
+                v.Creator = a;
+                return v;
+            }, new { id }).ToList();
         }
 
         internal string Remove(int id1)

@@ -64,6 +64,23 @@ namespace keeper_sharp.Repositories
             throw new Exception("Sql error on update keeps, no rows affected");
         }
 
+        internal List<Keep> GetKeepsByProfileId(string id)
+        {
+            string sql = @"
+            SELECT
+            k.*,
+            a.*
+            FROM keeps k
+            JOIN accounts a ON k.creatorId = a.id
+            WHERE k.creatorId = @id;
+            ";
+            return _db.Query<Keep, Account, Keep>(sql, (k, a) =>
+            {
+                k.Creator = a;
+                return k;
+            }, new { id }).ToList();
+        }
+
         internal string Remove(int id)
         {
             string sql = @"

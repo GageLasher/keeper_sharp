@@ -46,6 +46,12 @@ namespace keeper_sharp.Services
             original.Img = updateData.Img ?? original.Img;
             return _keepsRepo.Update(original);
         }
+
+        internal List<Keep> GetKeepsByProfileId(string id)
+        {
+            return _keepsRepo.GetKeepsByProfileId(id);
+        }
+
         internal void Remove(int id, string userId)
         {
             Keep found = GetById(id);

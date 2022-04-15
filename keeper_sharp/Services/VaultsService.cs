@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using keeper_sharp.Models;
 using keeper_sharp.Repositories;
 
@@ -52,6 +53,9 @@ namespace keeper_sharp.Services
             _vaultsRepo.Remove(id1);
         }
 
-
+        internal List<Vault> GetVaultsByProfileId(string id)
+        {
+            return _vaultsRepo.GetVaultsByProfileId(id);
+        }
     }
 }
