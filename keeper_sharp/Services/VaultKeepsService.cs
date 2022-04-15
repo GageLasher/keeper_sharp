@@ -16,5 +16,10 @@ namespace keeper_sharp.Services
         {
             return _vaultKeepsRepo.Create(data);
         }
+
+        internal void Delete(int id)
+        {
+            _vaultKeepsRepo.Delete(id);
+        }
     }
 }
