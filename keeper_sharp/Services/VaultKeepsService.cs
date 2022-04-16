@@ -38,6 +38,9 @@ namespace keeper_sharp.Services
                 throw new System.Exception("This isn't yours to delete");
             }
             _vaultKeepsRepo.Delete(id);
+            Keep keep = _keepsRepo.GetById(found.KeepId);
+            keep.Kept--;
+            _keepsRepo.Update(keep);
         }
     }
 }
