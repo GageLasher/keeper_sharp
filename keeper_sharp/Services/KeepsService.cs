@@ -29,10 +29,13 @@ namespace keeper_sharp.Services
         internal Keep GetById(int id)
         {
             Keep found = _keepsRepo.GetById(id);
+
             if (found == null)
             {
                 throw new Exception("no keep by that id");
             }
+            found.Views++;
+            _keepsRepo.Update(found);
             return found;
         }
 

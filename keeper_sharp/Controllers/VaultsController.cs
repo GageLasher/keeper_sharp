@@ -42,13 +42,13 @@ namespace keeper_sharp.Controllers
         }
         [HttpGet("{id}")]
 
-        public ActionResult<Vault> GetById(int id)
+        public async Task<ActionResult<Vault>> GetById(int id)
         {
             try
             {
-                // Account user = await HttpContext.GetUserInfoAsync<Account>();
+                Account user = await HttpContext.GetUserInfoAsync<Account>();
 
-                Vault vault = _vs.GetById(id);
+                Vault vault = _vs.GetById(id, user?.Id);
                 return Ok(vault);
             }
             catch (System.Exception e)

@@ -7,11 +7,13 @@ namespace keeper_sharp.Services
     {
         private readonly VaultKeepsRepository _vaultKeepsRepo;
         private readonly VaultsRepository _vaultsRepo;
+        private readonly KeepsRepository _keepsRepo;
 
-        public VaultKeepsService(VaultKeepsRepository vaultKeepsRepo, VaultsRepository vaultsRepo)
+        public VaultKeepsService(VaultKeepsRepository vaultKeepsRepo, VaultsRepository vaultsRepo, KeepsRepository keepsRepo)
         {
             _vaultKeepsRepo = vaultKeepsRepo;
             _vaultsRepo = vaultsRepo;
+            _keepsRepo = keepsRepo;
         }
 
         internal VaultKeep Create(VaultKeep data)
@@ -21,6 +23,10 @@ namespace keeper_sharp.Services
             {
                 throw new System.Exception("bro this isn't your vault");
             }
+            Keep keep = _keepsRepo.GetById(data.KeepId);
+            keep.Kept++;
+            _keepsRepo.Update(keep);
+
             return _vaultKeepsRepo.Create(data);
         }
 
