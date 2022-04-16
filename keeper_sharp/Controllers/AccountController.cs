@@ -43,7 +43,7 @@ namespace keeper_sharp.Controllers
             try
             {
                 Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-                List<Vault> vaults = _vs.GetVaultsByProfileId(userInfo.Id);
+                List<Vault> vaults = _vs.GetVaultsByAccountId(userInfo.Id);
                 return Ok(vaults);
             }
             catch (System.Exception)

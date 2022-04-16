@@ -48,6 +48,13 @@ namespace keeper_sharp.Services
             return _vaultsRepo.Update(original);
         }
 
+        internal List<Vault> GetVaultsByAccountId(string id)
+        {
+            List<Vault> vaults = _vaultsRepo.GetVaultsByProfileId(id);
+            return vaults;
+
+        }
+
         internal void Remove(int id1, string id2)
         {
             Vault found = GetById(id1, id2);
