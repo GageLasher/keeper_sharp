@@ -73,8 +73,11 @@
                     </li>
                   </ul>
                 </div>
-                <h5 v-if="user?.id == keep.creator?.id">
-                  <i class="mdi mdi-delete" title="delete keep"></i>
+                <h5
+                  v-if="user?.id == keep.creator?.id"
+                  @click="removeKeep(keep.vaultKeepId, keep.id)"
+                >
+                  <i class="mdi mdi-delete selectable" title="delete keep"></i>
                 </h5>
                 <div class="div d-flex">
                   <img
@@ -100,14 +103,16 @@
 import { computed, ref } from '@vue/reactivity'
 import { AppState } from '../AppState.js'
 import { Modal } from 'bootstrap'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { logger } from '../utils/Logger.js'
 import Pop from '../utils/Pop.js'
 import { vaultsService } from '../services/VaultsService.js'
 import { watchEffect } from '@vue/runtime-core'
+import { keepsService } from '../services/KeepsService.js'
 export default {
   setup() {
     const router = useRouter()
+    const route = useRoute()
     // watchEffect(async () => {
     //   try {
     //     await vaultsService.getAll()
@@ -130,6 +135,41 @@ export default {
           await vaultsService.addToVault(body)
           AppState.activeKeep.kept++
           Pop.toast("Added keep to your vault", "success")
+        } catch (error) {
+          logger.log(error)
+          Pop.toast(error.message)
+        }
+      },
+      async removeKeep(id, keepId) {
+        try {
+
+          if (route.name == "Vault") {
+
+            if (await Pop.confirm("You sure you want to delete this?")) {
+
+
+              await keepsService.removeVaultKeep(id)
+              Modal.getOrCreateInstance(document.getElementById('active-keep')).hide()
+              await vaultsService.getVaultKeeps(AppState.activeVault.id)
+
+            }
+          }
+
+          if (route.name != "Vault") {
+
+            if (await Pop.confirm("You sure you want to delete this?")) {
+
+
+              await keepsService.removeKeep(id, keepId)
+              Modal.getOrCreateInstance(document.getElementById('active-keep')).hide()
+              await keepsService.getAll()
+
+            }
+          }
+
+
+
+
         } catch (error) {
           logger.log(error)
           Pop.toast(error.message)
