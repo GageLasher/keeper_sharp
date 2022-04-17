@@ -20,6 +20,7 @@
               name=""
               id=""
               class="ms-2"
+              required
             />
           </div>
           <div class="col-12 p-3">
@@ -30,6 +31,7 @@
               name=""
               id=""
               class="ms-2"
+              required
             />
           </div>
           <div class="col-12 p-3">
