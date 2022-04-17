@@ -104,9 +104,18 @@ import { useRouter } from 'vue-router'
 import { logger } from '../utils/Logger.js'
 import Pop from '../utils/Pop.js'
 import { vaultsService } from '../services/VaultsService.js'
+import { watchEffect } from '@vue/runtime-core'
 export default {
   setup() {
     const router = useRouter()
+    // watchEffect(async () => {
+    //   try {
+    //     await vaultsService.getAll()
+    //   } catch (error) {
+    //     logger.log(error)
+    //     Pop.toast(error.message)
+    //   }
+    // })
     return {
       myVaults: computed(() => AppState.vaults.filter(v => v.creator.id == AppState.account.id)),
       user: computed(() => AppState.account),

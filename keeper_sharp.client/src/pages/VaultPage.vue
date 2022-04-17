@@ -56,6 +56,7 @@ export default {
 
             await vaultsService.deleteVault(AppState.activeVault.id)
             router.push({ name: 'Home' })
+            await vaultsService.getAll()
           }
 
         } catch (error) {
