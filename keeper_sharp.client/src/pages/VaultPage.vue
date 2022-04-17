@@ -2,7 +2,12 @@
   <div class="row m-5">
     <div class="col-12 d-flex justify-content-between">
       <h1>{{ vault.name }}</h1>
-      <button class="btn btn-outline-info">Delete Vault</button>
+      <button
+        class="btn btn-outline-info"
+        v-if="vault.creator?.id == account.id"
+      >
+        Delete Vault
+      </button>
     </div>
     <div class="col-12 mt-2">
       Keeps: <span>{{ keeps.length }} </span>
@@ -24,6 +29,7 @@ import { logger } from '../utils/Logger'
 import Pop from '../utils/Pop'
 import { vaultsService } from '../services/VaultsService'
 import { useRoute } from 'vue-router'
+import { router } from '../router'
 export default {
   setup() {
     const route = useRoute()
@@ -32,13 +38,17 @@ export default {
         await vaultsService.getVault(route.params.id)
         await vaultsService.getVaultKeeps(AppState.activeVault.id)
       } catch (error) {
+        router.push({ name: 'Home' })
+
         logger.log(error)
         Pop.toast(error.message)
+
       }
     })
     return {
       vault: computed(() => AppState.activeVault),
-      keeps: computed(() => AppState.keeps)
+      keeps: computed(() => AppState.keeps),
+      account: computed(() => AppState.account)
     }
   }
 }
