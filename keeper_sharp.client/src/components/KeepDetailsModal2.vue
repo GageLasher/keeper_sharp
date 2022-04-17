@@ -50,7 +50,29 @@
             <div class="spacer"></div>
             <div class="row mt-5 align-items-center">
               <div class="col-12 d-flex justify-content-between">
-                <button class="btn btn-outline-success">ADD TO VAULT</button>
+                <div class="dropdown">
+                  <button
+                    class="btn btn-outline-success dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    ADD TO VAULT
+                  </button>
+                  <ul
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton1"
+                  >
+                    <li
+                      v-for="mV in myVaults"
+                      :key="mV.id"
+                      @click="addToVault(mV.id)"
+                    >
+                      <a class="dropdown-item" href="#">{{ mV.name }} </a>
+                    </li>
+                  </ul>
+                </div>
                 <h5 v-if="user?.id == keep.creator?.id">
                   <i class="mdi mdi-delete" title="delete keep"></i>
                 </h5>
@@ -58,7 +80,9 @@
                   <img
                     :src="keep.creator?.picture"
                     alt=""
-                    class="img-fluid pp rounded"
+                    class="img-fluid pp rounded selectable"
+                    :title="keep.creator?.name"
+                    @click="goToProfile(keep.creator?.id)"
                   />
                   <p class="clip-text ms-2">{{ keep.creator?.name }}</p>
                 </div>
@@ -77,18 +101,31 @@ import { computed, ref } from '@vue/reactivity'
 import { AppState } from '../AppState.js'
 import { Modal } from 'bootstrap'
 import { useRouter } from 'vue-router'
+import { logger } from '../utils/Logger.js'
+import Pop from '../utils/Pop.js'
+import { vaultsService } from '../services/VaultsService.js'
 export default {
   setup() {
     const router = useRouter()
-    const review = ref({})
     return {
-      review,
+      myVaults: computed(() => AppState.vaults.filter(v => v.creator.id == AppState.account.id)),
       user: computed(() => AppState.account),
       keep: computed(() => AppState.activeKeep),
       goToProfile(id) {
-        Modal.getOrCreateInstance(document.getElementById('active-restaurant')).hide()
+        Modal.getOrCreateInstance(document.getElementById('active-keep')).hide()
         router.push({ name: 'Profile', params: { id } })
       },
+      async addToVault(id) {
+        try {
+          let body = { keepId: AppState.activeKeep.id, vaultId: id }
+          await vaultsService.addToVault(body)
+          AppState.activeKeep.kept++
+          Pop.toast("Added keep to your vault", "success")
+        } catch (error) {
+          logger.log(error)
+          Pop.toast(error.message)
+        }
+      }
     }
   }
 }
