@@ -29,9 +29,9 @@ CREATE Table IF NOT Exists vaultKeeps(
     keepId INT,
     vaultId INT,
     creatorId VARCHAR(255),
-    FOREIGN KEY (creatorId) REFERENCES accounts(id),
-    FOREIGN KEY (keepId) REFERENCES keeps(id),
-    FOREIGN KEY (vaultId) REFERENCES vaults(id)
+    FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE,
+    FOREIGN KEY (keepId) REFERENCES keeps(id) ON DELETE CASCADE,
+    FOREIGN KEY (vaultId) REFERENCES vaults(id) ON DELETE CASCADE
   ) default charset utf8 COMMENT '';
 CREATE TABLE IF NOT EXISTS keeps(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,

@@ -5,6 +5,7 @@
       <button
         class="btn btn-outline-info"
         v-if="vault.creator?.id == account.id"
+        @click="deleteVault"
       >
         Delete Vault
       </button>
@@ -13,7 +14,7 @@
       Keeps: <span>{{ keeps.length }} </span>
     </div>
   </div>
-  <div class="masonry-with-columns ms-5 mb-5 me-5">
+  <div class="masonry-with-columns ms-5">
     <div v-for="k in keeps" :key="k.id" class="">
       <KeepCard :keep="k" />
     </div>
@@ -48,7 +49,20 @@ export default {
     return {
       vault: computed(() => AppState.activeVault),
       keeps: computed(() => AppState.keeps),
-      account: computed(() => AppState.account)
+      account: computed(() => AppState.account),
+      async deleteVault() {
+        try {
+          if (await Pop.confirm('Do you want to delete your vault?')) {
+
+            await vaultsService.deleteVault(AppState.activeVault.id)
+            router.push({ name: 'Home' })
+          }
+
+        } catch (error) {
+          logger.log(error)
+          Pop.toast(error.message)
+        }
+      }
     }
   }
 }
