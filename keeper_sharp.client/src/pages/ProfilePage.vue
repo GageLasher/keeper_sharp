@@ -15,16 +15,37 @@
       </div>
     </div>
     <div class="row m-5">
-      <div class="col-12">
+      <div class="col-12 d-flex">
         <h3>Vaults</h3>
+        <h3
+          v-if="profile.id == account.id"
+          class="bg-green ms-2 selectable"
+          title="create vault"
+          data-bs-toggle="modal"
+          data-bs-target="#create-vault"
+        >
+          +
+        </h3>
       </div>
 
       <div class="col-12">
-        <div class="row">
+        <div class="row" v-if="account.id != profile.id">
           <div
             class="col-md-2 fixed-height mb-5 selectable"
             :title="v.name"
             v-for="v in profileVaults"
+            :key="v.id"
+            @click="goToVault(v.id)"
+          >
+            <img :src="v.img" alt="" class="img-fluid fixed-height" />
+            {{ v.name }}
+          </div>
+        </div>
+        <div class="row" v-if="account.id == profile.id">
+          <div
+            class="col-md-2 fixed-height mb-5 selectable"
+            :title="v.name"
+            v-for="v in accountVaults"
             :key="v.id"
             @click="goToVault(v.id)"
           >
@@ -55,6 +76,7 @@
     </div>
   </div>
   <CreateKeepModal2 />
+  <CreateVaultModal2 />
 </template>
 
 
@@ -75,6 +97,7 @@ export default {
         await profilesService.getProfile(route.params.id)
         await profilesService.getProfileVaults(route.params.id)
         await profilesService.getProfileKeeps(route.params.id)
+
       } catch (error) {
         logger.error(error)
         Pop.toast(error.message, 'error')
@@ -83,6 +106,7 @@ export default {
     return {
       profile: computed(() => AppState.activeProfile),
       account: computed(() => AppState.account),
+      accountVaults: computed(() => AppState.vaults),
       profileVaults: computed(() => AppState.activeProfileVaults),
       profileKeeps: computed(() => AppState.activeProfileKeeps),
       async goToVault(id) {

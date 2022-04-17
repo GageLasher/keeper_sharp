@@ -7,6 +7,7 @@ class VaultsService {
         const res = await api.get('account/vaults')
         AppState.vaults = res.data
     }
+
     async addToVault(body) {
         const res = await api.post('api/vaultkeeps', body)
     }
@@ -22,6 +23,10 @@ class VaultsService {
     async deleteVault(id) {
         const res = await api.delete('api/vaults/' + id)
 
+    }
+    async createVault(body) {
+        const res = await api.post('api/vaults/', body)
+        AppState.activeProfileVaults = [...AppState.activeProfileVaults, res.data]
     }
 
 }
