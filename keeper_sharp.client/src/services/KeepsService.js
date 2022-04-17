@@ -8,6 +8,11 @@ class KeepsService {
         const res = await api.get('api/keeps')
         AppState.keeps = res.data
     }
+    async setActive(keep) {
+        const res = await api.get('api/keeps/' + keep.id)
+        AppState.activeKeep = res.data
+
+    }
 
 }
 

@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="component-container">
     <div class="masonry-with-columns">
-      <div v-for="k in keeps" :key="k.id">
+      <div v-for="k in keeps" :key="k.id" class="">
         <KeepCard :keep="k" />
       </div>
     </div>

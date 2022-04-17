@@ -1,7 +1,16 @@
 <template>
-  <div class="cover-img m-3">
-    <div class="p-2 bg-dark-blur rounded text-center text-light">
-      {{ keep.name }}
+  <div
+    class="project m-2"
+    @click="setActive"
+    data-bs-toggle="modal"
+    data-bs-target="#active-keep"
+  >
+    <img :src="keep.img" alt="" class="img-fluid" />
+    <div class="row">
+      <div class="col-12 d-flex justify-content-between align-items-center">
+        <h6 class="p-1">{{ keep.name }}</h6>
+        <img :src="keep.creator.picture" alt="" class="img-fluid pp p-1" />
+      </div>
     </div>
   </div>
 </template>
@@ -9,6 +18,7 @@
 
 <script>
 import { computed } from '@vue/reactivity'
+import { keepsService } from '../services/KeepsService'
 export default {
   props: {
     keep: {
@@ -18,7 +28,10 @@ export default {
   },
   setup(props) {
     return {
-      coverImg: computed(() => `url('${props.keep.img}')`)
+      coverImg: computed(() => `url('${props.keep.img}')`),
+      async setActive() {
+        await keepsService.setActive(props.keep)
+      }
     }
   }
 }
@@ -29,6 +42,22 @@ export default {
 .cover-img {
   background-image: v-bind(coverImg);
   background-size: cover;
+  min-height: 100%;
   background-position: center;
+}
+.project {
+  min-height: 100%;
+  transition: all 0.12s ease;
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.3);
+}
+.project:hover {
+  transform: scale(1.05);
+  outline: 1px solid var(--bs-light);
+  box-shadow: 0px 15px 10px rgba(0, 0, 0, 0.3);
+}
+.pp {
+  border-radius: 50%;
+  width: 5vh;
+  height: 5vh;
 }
 </style>
