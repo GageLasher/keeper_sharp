@@ -9,9 +9,11 @@ class KeepsService {
         const res = await api.get('api/keeps')
         AppState.keeps = res.data
     }
-    setActive(keep) {
-        AppState.activeKeep = keep
+    async setActive(keep) {
+        const res = await api.get('api/keeps/' + keep.id)
+        AppState.activeKeep = res.data
         logger.log(AppState.activeKeep)
+        AppState.activeKeepVaultPage = keep
 
     }
     async removeVaultKeep(id) {

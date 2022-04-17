@@ -29,8 +29,8 @@ export default {
   setup(props) {
     return {
       coverImg: computed(() => `url('${props.keep.img}')`),
-      setActive() {
-        keepsService.setActive(props.keep)
+      async setActive() {
+        await keepsService.setActive(props.keep)
       }
     }
   }

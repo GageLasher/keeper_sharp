@@ -145,10 +145,10 @@ export default {
 
           if (route.name == "Vault") {
 
-            if (await Pop.confirm("You sure you want to delete this?")) {
+            if (await Pop.confirm("You sure you want to delete this from this vault?")) {
 
 
-              await keepsService.removeVaultKeep(id)
+              await keepsService.removeVaultKeep(AppState.activeKeepVaultPage.vaultKeepId)
               Modal.getOrCreateInstance(document.getElementById('active-keep')).hide()
               await vaultsService.getVaultKeeps(AppState.activeVault.id)
 
