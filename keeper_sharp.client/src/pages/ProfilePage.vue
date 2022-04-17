@@ -35,8 +35,17 @@
       </div>
     </div>
     <div class="row ms-5">
-      <div class="col-12">
+      <div class="col-12 d-flex">
         <h3>Keeps</h3>
+        <h3
+          v-if="profile.id == account.id"
+          class="bg-green ms-2 selectable"
+          title="create keep"
+          data-bs-toggle="modal"
+          data-bs-target="#create-keep"
+        >
+          +
+        </h3>
       </div>
     </div>
     <div class="masonry-with-columns ms-5 mb-5 me-5">
@@ -45,6 +54,7 @@
       </div>
     </div>
   </div>
+  <CreateKeepModal2 />
 </template>
 
 
@@ -72,6 +82,7 @@ export default {
     })
     return {
       profile: computed(() => AppState.activeProfile),
+      account: computed(() => AppState.account),
       profileVaults: computed(() => AppState.activeProfileVaults),
       profileKeeps: computed(() => AppState.activeProfileKeeps),
       async goToVault(id) {
@@ -97,5 +108,8 @@ export default {
     display: inline-block;
     width: 100%;
   }
+}
+.bg-green {
+  color: rgb(23, 190, 23);
 }
 </style>

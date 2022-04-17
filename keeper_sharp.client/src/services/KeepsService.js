@@ -22,6 +22,11 @@ class KeepsService {
     async removeKeep(id, keepId) {
         const res = await api.delete('api/keeps/' + keepId)
     }
+    async create(body) {
+        const res = await api.post('api/keeps/', body)
+        AppState.keeps = [...AppState.keeps, res.data]
+        AppState.activeProfileKeeps = [...AppState.activeProfileKeeps, res.data]
+    }
 
 }
 
