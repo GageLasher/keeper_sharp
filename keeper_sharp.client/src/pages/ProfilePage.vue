@@ -29,28 +29,40 @@
       </div>
 
       <div class="col-12">
-        <div class="row" v-if="account.id != profile.id">
+        <div class="row container p-0" v-if="account.id != profile.id">
           <div
-            class="col-md-2 fixed-height mb-5 selectable"
+            class="col-md-3 fixed-height mb-5 selectable"
             :title="v.name"
             v-for="v in profileVaults"
             :key="v.id"
             @click="goToVault(v.id)"
           >
-            <img :src="v.img" alt="" class="img-fluid fixed-height" />
-            {{ v.name }}
+            <img
+              :src="v.img"
+              alt=""
+              class="img-fluid fixed-height rounded cover-fit"
+            />
+            <h6 class="bottom-left">
+              {{ v.name }}
+            </h6>
           </div>
         </div>
-        <div class="row" v-if="account.id == profile.id">
+        <div class="row container p-0" v-if="account.id == profile.id">
           <div
-            class="col-md-2 fixed-height mb-5 selectable"
+            class="col-md-3 fixed-height mb-5 selectable"
             :title="v.name"
             v-for="v in accountVaults"
             :key="v.id"
             @click="goToVault(v.id)"
           >
-            <img :src="v.img" alt="" class="img-fluid fixed-height" />
-            {{ v.name }}
+            <img
+              :src="v.img"
+              alt=""
+              class="img-fluid fixed-height rounded cover-fit"
+            />
+            <h6 class="bottom-left">
+              {{ v.name }}
+            </h6>
           </div>
         </div>
       </div>
@@ -135,5 +147,24 @@ export default {
 }
 .bg-green {
   color: rgb(23, 190, 23);
+}
+.container {
+  position: relative;
+
+  color: white;
+
+  text-shadow: 2px 2px #2c2a2a;
+}
+.cover-fit {
+  object-fit: cover;
+}
+.bottom-left {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+}
+h6 {
+  font-size: 10pt;
+  font-weight: bold;
 }
 </style>

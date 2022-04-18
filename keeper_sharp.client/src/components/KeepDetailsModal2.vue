@@ -6,7 +6,7 @@
           <div class="col-md-6 p-2">
             <img
               height="500"
-              class="w-100 object-fit-cover"
+              class="w-100 object-fit-cover rounded"
               :src="keep.img"
               alt=""
             />
@@ -52,7 +52,7 @@
               <div class="col-12 d-flex justify-content-between">
                 <div class="dropdown">
                   <button
-                    class="btn btn-outline-success dropdown-toggle"
+                    class="btn btn-outline-success2 dropdown-toggle"
                     type="button"
                     id="dropdownMenuButton1"
                     data-bs-toggle="dropdown"
@@ -191,5 +191,8 @@ export default {
 .pp {
   height: 3vh;
   width: 3vh;
+}
+.btn-outline-success2 {
+  color: #55efc4;
 }
 </style>

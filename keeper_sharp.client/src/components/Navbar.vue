@@ -1,8 +1,8 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary px-3">
+  <nav class="navbar navbar-expand-lg navbar-dark green px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <h1 class="border p-2">K</h1>
+        <h1 class="border border-dark p-2 text-dark">K</h1>
       </div>
     </router-link>
     <button
@@ -46,7 +46,8 @@ a:hover {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
-.border {
-  border: solid 15px;
+
+.green {
+  background-color: #55efc4;
 }
 </style>
