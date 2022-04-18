@@ -52,7 +52,7 @@
               <div class="col-12 d-flex justify-content-between">
                 <div class="dropdown">
                   <button
-                    class="btn btn-outline-success2 dropdown-toggle"
+                    class="btn btn-outline dropdown-toggle"
                     type="button"
                     id="dropdownMenuButton1"
                     data-bs-toggle="dropdown"
