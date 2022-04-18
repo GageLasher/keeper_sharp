@@ -98,7 +98,7 @@
 
 
 <script>
-import { computed, onMounted } from '@vue/runtime-core'
+import { computed, onMounted, watchEffect } from '@vue/runtime-core'
 import { useRoute, useRouter } from 'vue-router'
 import { profilesService } from '../services/ProfilesService'
 import { AppState } from '../AppState'
@@ -109,11 +109,14 @@ export default {
   setup() {
     const route = useRoute()
     const router = useRouter()
-    onMounted(async () => {
+    watchEffect(async () => {
       try {
-        await profilesService.getProfile(route.params.id)
-        await profilesService.getProfileVaults(route.params.id)
-        await profilesService.getProfileKeeps(route.params.id)
+        if (route.name == "Profile") {
+
+          await profilesService.getProfile(route.params.id)
+          await profilesService.getProfileVaults(route.params.id)
+          await profilesService.getProfileKeeps(route.params.id)
+        }
 
       } catch (error) {
         logger.error(error)

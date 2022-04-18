@@ -83,7 +83,7 @@
                   v-if="
                     route.name == 'Vault' &&
                     keep?.vaultKeepId != '' &&
-                    keep.creator.id != user.id
+                    keep.creator?.id != user.id
                   "
                   @click="removeKeep(keep.vaultKeepId, keep.id)"
                 >

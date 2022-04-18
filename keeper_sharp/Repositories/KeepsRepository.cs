@@ -106,7 +106,7 @@ namespace keeper_sharp.Repositories
             FROM vaults v
             JOIN vaultKeeps vk ON v.id = vk.vaultId
             JOIN keeps k ON vk.keepId = k.id
-            JOIN accounts a ON vk.creatorId = a.id
+            JOIN accounts a ON k.creatorId = a.id
             WHERE v.id = @id;
             ";
             return _db.Query<Vault, Account, VaultKeepViewModel, Keep, VaultKeepViewModel>(sql, (v, a, vkvm, vk) =>
