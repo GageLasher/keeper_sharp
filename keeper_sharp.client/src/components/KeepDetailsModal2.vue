@@ -37,8 +37,8 @@
               </div>
             </div>
             <div class="row justify-content-center">
-              <div class="col-12 text-center mt-4">
-                <h2>
+              <div class="col-12 mt-4">
+                <h2 class="text-center">
                   {{ keep.name }}
                 </h2>
                 <p class="mt-3">
@@ -50,7 +50,7 @@
             <div class="spacer"></div>
             <div class="row mt-5 align-items-center">
               <div class="col-12 d-flex justify-content-between">
-                <div class="dropdown">
+                <div class="dropdown" v-if="user.id != undefined">
                   <button
                     class="btn btn-outline dropdown-toggle"
                     type="button"
@@ -75,6 +75,16 @@
                 </div>
                 <h5
                   v-if="user?.id == keep.creator?.id"
+                  @click="removeKeep(keep.vaultKeepId, keep.id)"
+                >
+                  <i class="mdi mdi-delete selectable" title="delete keep"></i>
+                </h5>
+                <h5
+                  v-if="
+                    route.name == 'Vault' &&
+                    keep?.vaultKeepId != '' &&
+                    keep.creator.id != user.id
+                  "
                   @click="removeKeep(keep.vaultKeepId, keep.id)"
                 >
                   <i class="mdi mdi-delete selectable" title="delete keep"></i>
@@ -125,6 +135,7 @@ export default {
       myVaults: computed(() => AppState.vaults.filter(v => v.creator.id == AppState.account.id)),
       user: computed(() => AppState.account),
       keep: computed(() => AppState.activeKeep),
+      route,
       goToProfile(id) {
         Modal.getOrCreateInstance(document.getElementById('active-keep')).hide()
         router.push({ name: 'Profile', params: { id } })
@@ -195,5 +206,8 @@ export default {
 }
 .btn-outline-success2 {
   color: #55efc4;
+}
+.object-fit-cover {
+  object-fit: cover;
 }
 </style>

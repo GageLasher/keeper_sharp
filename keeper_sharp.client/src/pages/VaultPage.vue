@@ -38,6 +38,7 @@ export default {
       try {
         await vaultsService.getVault(route.params.id)
         await vaultsService.getVaultKeeps(AppState.activeVault.id)
+        logger.log(AppState.keeps)
       } catch (error) {
         router.push({ name: 'Home' })
 
