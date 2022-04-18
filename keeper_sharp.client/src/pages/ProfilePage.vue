@@ -7,7 +7,12 @@
         <img :src="profile?.picture" alt="" class="img-fluid rounded" />
         <div class="row ms-3">
           <h2 class="">{{ profile.name }}</h2>
-          <h5>Vaults: {{ profileVaults.length }}</h5>
+          <h5 v-if="account.id != profile.id">
+            Vaults: {{ profileVaults.length }}
+          </h5>
+          <h5 v-if="account.id == profile.id">
+            Vaults: {{ accountVaults.length }}
+          </h5>
           <h5>Keeps: {{ profileKeeps.length }}</h5>
           <!-- </div> -->
           <!-- </div> -->
