@@ -10,6 +10,7 @@ class VaultsService {
 
     async addToVault(body) {
         const res = await api.post('api/vaultkeeps', body)
+
     }
     async getVault(id) {
         const res = await api.get('api/vaults/' + id)

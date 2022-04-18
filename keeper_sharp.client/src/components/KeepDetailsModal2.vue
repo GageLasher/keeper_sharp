@@ -133,7 +133,8 @@ export default {
         try {
           let body = { keepId: AppState.activeKeep.id, vaultId: id }
           await vaultsService.addToVault(body)
-          AppState.activeKeep.kept++
+
+
           Pop.toast("Added keep to your vault", "success")
         } catch (error) {
           logger.log(error)
